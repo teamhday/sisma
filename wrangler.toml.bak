@@ -1,4 +1,4 @@
 name = "sisma"
 compatibility_date = "2025-11-20"
 
-assets = { directory = "." }
+assets = { directory = "./public" }
