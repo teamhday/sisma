@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Embedded Editor — chỉnh text & ảnh</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  :root{--w:380px}
+  body{font-family:Arial,Helvetica,sans-serif;margin:0;height:100vh;display:flex;gap:12px;background:#f3f4f6}
+  #sidebar{width:var(--w);background:white;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:12px;overflow:auto}
+  #previewWrap{flex:1;display:flex;flex-direction:column;padding:12px}
+  h2{margin:6px 0 12px;font-size:16px}
+  .item{border:1px solid #eee;padding:8px;margin-bottom:8px;border-radius:6px;background:#fff}
+  .label{font-weight:600;font-size:13px;margin-bottom:6px}
+  textarea,input[type="text"]{width:100%;box-sizing:border-box;padding:6px;font-size:14px}
+  .img-row{display:flex;gap:8px;align-items:center}
+  .img-thumb{width:86px;height:56px;object-fit:cover;border:1px solid #ddd}
+  .controls{display:flex;gap:8px;margin-top:10px}
+  button{padding:8px 10px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer}
+  button.primary{background:#0b74de;color:white;border-color:transparent}
+  #iframePreview{flex:1;width:100%;border:1px solid #ddd;border-radius:6px;background:white}
+  .muted{color:#666;font-size:13px}
+  .small{font-size:12px}
+  #topbar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div id="topbar">
+    <div>
+      <h2>Editor (EMBED) — vùng từ tiêu đề dự án</h2>
+      <div class="muted small">Sửa text & hình — layout giữ nguyên.</div>
+    </div>
+    <div class="controls">
+      <button id="btnDownload" class="primary">Download HTML</button>
+    </div>
+  </div>
+  <div id="controlsList" class="muted small">Đang tải mẫu…</div>
+</div>
+
+<div id="previewWrap">
+  <div class="muted small">Preview:</div>
+  <iframe id="iframePreview" sandbox="allow-same-origin allow-scripts"></iframe>
+</div>
+
+<script>
+(function(){
+  const embeddedHTML = `
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head id="Head1"><title>
+	
+        CAO ỐC THƯƠNG MẠI DỊCH VỤ & CĂN HỘ LAKESIDE TOWER ( THÁP BÊN HỒ )
+</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><link rel="icon" type="image/x-icon" href="../Content/Images/home/logo.png" /><meta name="robots" content="INDEX,FOLLOW,ALL" />
+    <meta property="og:url" content="ascent-lakeside.html">
+    <meta property="og:title" content="CAO ỐC THƯƠNG MẠI DỊCH VỤ & CĂN HỘ LAKESIDE TOWER ( THÁP BÊN HỒ )">
+    
+    <meta property="og:image" content="../Content/Images/FileUpload/2018/7/t4q-du-an-ascent-lakeside-slide-30.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../Code/Web/Styles/Utils-min.css" rel="stylesheet" type="text/css" /><script src="../Code/Web/Scripts/jquery.js" type="text/javascript"></script><script src="../Code/Web/Scripts/utils-min.js" type="text/javascript"></script><link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&amp;subset=vietnamese" rel="stylesheet" /><link href="../Content/Styles/Site4854.css?c=23" rel="stylesheet" type="text/css" /><link href="../Content/Styles/Reponsive85a3.css?c=12" rel="stylesheet" type="text/css" />
+    <script src="../Content/Scripts/slidemaster.js"></script>
+    <script src="../Content/Scripts/page.js" type="text/javascript"></script>
+    
+    <link href="../Content/Fancybox/jquery.fancybox.min.css" rel="stylesheet" />
+    <script src="../Content/Fancybox/jquery.fancybox.min.js"></script>
+    <script src="../Content/Jssor/jssor.slider.mini.js" type="text/javascript"></script>
+    <script>
+        $(function () {
+            var _SlideshowTransitions = [
+            //Swing Outside in Stairs
+            { $Duration: 1200, x: 0.2, y: -0.1, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: { $Left: [0.3, 0.7], $Top: [0.3, 0.7] }, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: { $Left: $JssorEasing$.$EaseInWave, $Top: $JssorEasing$.$EaseInWave, $Clip: $JssorEasing$.$EaseOutQuad }, $Outside: true, $Round: { $Left: 1.3, $Top: 2.5 } }
+
+            //Dodge Dance Outside out Stairs
+            , { $Duration: 1500, x: 0.3, y: -0.3, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: { $Left: [0.1, 0.9], $Top: [0.1, 0.9] }, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: { $Left: $JssorEasing$.$EaseInJump, $Top: $JssorEasing$.$EaseInJump, $Clip: $JssorEasing$.$EaseOutQuad }, $Outside: true, $Round: { $Left: 0.8, $Top: 2.5 } }
+
+            //Dodge Pet Outside in Stairs
+            , { $Duration: 1500, x: 0.2, y: -0.1, $Delay: 20, $Cols: 8, $Rows: 4, $Clip: 15, $During: { $Left: [0.3, 0.7], $Top: [0.3, 0.7] }, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 260, $Easing: { $Left: $JssorEasing$.$EaseInWave, $Top: $JssorEasing$.$EaseInWave, $Clip: $JssorEasing$.$EaseOutQuad }, $Outside: true, $Round: { $Left: 0.8, $Top: 2.5 } }
+
+            //Dodge Dance Outside in Random
+            , { $Duration: 1500, x: 0.3, y: -0.3, $Delay: 80, $Cols: 8, $Rows: 4, $Clip: 15, $During: { $Left: [0.3, 0.7], $Top: [0.3, 0.7] }, $Easing: { $Left: $JssorEasing$.$EaseInJump, $Top: $JssorEasing$.$EaseInJump, $Clip: $JssorEasing$.$EaseOutQuad }, $Outside: true, $Round: { $Left: 0.8, $Top: 2.5 } }
+
+            //Flutter out Wind
+            , { $Duration: 1800, x: 1, y: 0.2, $Delay: 30, $Cols: 10, $Rows: 5, $Clip: 15, $During: { $Left: [0.3, 0.7], $Top: [0.3, 0.7] }, $SlideOut: true, $Reverse: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 2050, $Easing: { $Left: $JssorEasing$.$EaseInOutSine, $Top: $JssorEasing$.$EaseOutWave, $Clip: $JssorEasing$.$EaseInOutQuad }, $Outside: true, $Round: { $Top: 1.3 } }
+
+            //Collapse Stairs
+            , { $Duration: 1200, $Delay: 30, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraightStairs, $Assembly: 2049, $Easing: $JssorEasing$.$EaseOutQuad }
+
+            //Collapse Random
+            , { $Duration: 1000, $Delay: 80, $Cols: 8, $Rows: 4, $Clip: 15, $SlideOut: true, $Easing: $JssorEasing$.$EaseOutQuad }
+
+            //Vertical Chess Stripe
+            , { $Duration: 1000, y: -1, $Cols: 12, $Formation: $JssorSlideshowFormations$.$FormationStraight, $ChessMode: { $Column: 12 } }
+
+            //Extrude out Stripe
+            , { $Duration: 1000, x: -0.2, $Delay: 40, $Cols: 12, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraight, $Assembly: 260, $Easing: { $Left: $JssorEasing$.$EaseInOutExpo, $Opacity: $JssorEasing$.$EaseInOutQuad }, $Opacity: 2, $Outside: true, $Round: { $Top: 0.5 } }
+
+            //Dominoes Stripe
+            , { $Duration: 2000, y: -1, $Delay: 60, $Cols: 15, $SlideOut: true, $Formation: $JssorSlideshowFormations$.$FormationStraight, $Easing: $JssorEasing$.$EaseOutJump, $Round: { $Top: 1.5 } }
+            ];
+
+            var options = {
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlaySteps: 1,                                  //[Optional] Steps to go for each navigation request (this options applys only when slideshow disabled), the default value is 1
+                $AutoPlayInterval: 7000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $PauseOnHover: 1,                               //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
+
+                $ArrowKeyNavigation: true,   			            //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
+                $SlideDuration: 500,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
+                //$SlideWidth: 600,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                //$SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                $SlideSpacing: 0, 					                //[Optional] Space between each slide in pixels, default value is 0
+                $DisplayPieces: 1,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+                $ParkingPosition: 0,                                //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
+                $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                $DragOrientation: 3,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+
+                $SlideshowOptions: {                                //[Optional] Options to specify and enable slideshow or not
+                    $Class: $JssorSlideshowRunner$,                 //[Required] Class to create instance of slideshow
+                    $Transitions: _SlideshowTransitions,            //[Required] An array of slideshow transitions to play slideshow
+                    $TransitionsOrder: 1,                           //[Optional] The way to choose transition to play slide, 1 Sequence, 0 Random
+                    $ShowLink: true                                    //[Optional] Whether to bring slide link on top of the slider when slideshow is running, default value is false
+                },
+
+                $BulletNavigatorOptions: {                                //[Optional] Options to specify and enable navigator or not
+                    $Class: $JssorBulletNavigator$,                       //[Required] Class to create navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $AutoCenter: 0,                                 //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                    $Steps: 1,                                      //[Optional] Steps to go for each navigation request, default value is 1
+                    $Lanes: 1,                                      //[Optional] Specify lanes to arrange items, default value is 1
+                    $SpacingX: 10,                                   //[Optional] Horizontal space between each item in pixel, default value is 0
+                    $SpacingY: 10,                                   //[Optional] Vertical space between each item in pixel, default value is 0
+                    $Orientation: 1                                 //[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
+                },
+
+                $ArrowNavigatorOptions: {
+                    $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                    $ChanceToShow: 2                                //[Required] 0 Never, 1 Mouse Over, 2 Always
+                }
+            };
+            if ($("#slider2_container").size() > 0) {
+                var jssor_slider2 = new $JssorSlider$("slider2_container", options);
+                function ScaleSlider() {
+                    var bodyWidth = $("#wrapBanner").width();
+                    if (bodyWidth)
+                        jssor_slider2.$ScaleWidth(Math.min(bodyWidth, 876));
+                    else
+                        window.setTimeout(ScaleSlider, 30);
+                }
+
+                ScaleSlider();
+
+                if (!navigator.userAgent.match(/(iPhone|iPod|iPad|BlackBerry|IEMobile)/)) {
+                    $(window).bind('resize', ScaleSlider);
+                }
+
+                $("body").on("click", "#media .gallery a", function (e) {
+                    var parent = $(this).parent();
+                    var index = $("a", parent).index(this);
+                    $.fancybox.open($("a", parent), {}, index);
+                    e.preventDefault();
+                })
+
+                $(window).scroll(function () {
+                    var top = $(window).scrollTop();
+                    var pos = getRealPosition($("#menuProject"));
+                    if (top > pos.y) {
+                        $("#menuProject").addClass("fix");
+                    } else {
+                        $("#menuProject").removeClass("fix");
+                    }
+                });
+            }
+        })
+    </script>
+    <style>
+        .jssorb01 div, .jssorb01 div:hover, .jssorb01 .av {
+            filter: alpha(opacity=70);
+            opacity: .7;
+            overflow: hidden;
+            cursor: pointer;
+            border: #000 1px solid;
+        }
+
+        .jssorb01 {
+            right: 20px !important;
+            bottom: 20px !important;
+        }
+
+            .jssorb01 div {
+                width: 20px !important;
+                height: 20px !important;
+                border: none !important;
+            }
+
+                .jssorb01 div:hover, .jssorb01 .av:hover {
+                    background-color: #d3d3d3;
+                }
+
+            .jssorb01 .dn, .jssorb01 .dn:hover {
+                background-color: #555555;
+            }
+
+        .jssora05l, .jssora05r, .jssora05ldn, .jssora05rdn {
+            position: absolute;
+            cursor: pointer;
+            display: block;
+            background: url(../Content/Jssor/a17.png) no-repeat;
+            overflow: hidden;
+        }
+
+        .jssora05l {
+            background-position: -10px -40px;
+        }
+
+        .jssora05r {
+            background-position: -70px -40px;
+        }
+
+        .jssora05l:hover {
+            background-position: -130px -40px;
+        }
+
+        .jssora05r:hover {
+            background-position: -190px -40px;
+        }
+
+        .jssora05ldn {
+            background-position: -250px -40px;
+        }
+
+        .jssora05rdn {
+            background-position: -310px -40px;
+        }
+    </style>
+
+    <script src="../Content/Jmenu/jquery.mmenu.min.all.js"></script>
+    <link href="../Content/Jmenu/jquery.mmenu.all.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            var mobiMenu = $("#mainMenu").clone().attr("id", "mobileMenu");
+            mobiMenu.removeClass("main-menu");
+            $("i", mobiMenu).remove();
+            $('nav.menu1').append(mobiMenu);
+            $('nav.menu1').mmenu();
+        });
+    </script>
+</head>
+<body>
+    <div runnat="Window" class="Window" id="pageMain_RD883" apply="yPhM+NHI1I4udJTQGLC2n1sQffSVZ6WCdpJ2C/+XL+0=">
+	
+        <div id="headPage">
+            <div class="page-width">
+                <a href="../index.html" id="logo">
+                    <img src="../Content/Images/home/logo.png" /></a>
+                <div class="wrap-menu">
+                    <div runnat="Div" id="RD884_RD885" class="Div slogan">
+		<h2 style="text-align:center"><span style="color:#2a6fa9"><span style="font-size:20px"><strong>C&Ocirc;NG TY CỔ PHẦN TƯ VẤN SISMA</strong></span></span></h2>
+
+	</div>
+                    <ul class="main-menu" id="mainMenu">
+                        <li><a href="../index.html">Trang chủ</a></li>
+                        <li><a href="../gioi-thieu.html"><span>Giới thiệu</span><i class="fa fa-angle-double-down"></i></a>
+                            <ul>
+                                <li><a href="../tam-nhin-su-menh.html">Tầm nhìn & sứ mệnh</a></li><li><a href="../gia-tri-cot-loi.html">Giá trị cốt lõi</a></li><li><a href="../thong-diep.html">Thông điệp</a></li><li><a href="../co-cau-to-chuc.html">Cơ cấu tổ chức</a></li><li><a href="../nganh-nghe-kinh-doanh.html">Ngành nghề kinh doanh</a></li><li><a href="../gioi-thieu-ve-cong-ty.html">Giới thiệu về công ty</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="../du-an.html"><span>Dự án</span><i class="fa fa-angle-double-down"></i></a>
+                            <ul>
+                                <li><a href="../du-an-can-ho.html">Dự án đã hoàn thành</a></li><li><a href="../du-an-biet-thu.html">Dự án đang thực hiện</a></li><li><a href="../du-an-dat-nen.html">Dự án chuẩn bị triển khai</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="../tin-tuc.html"><span>Tin tức</span></a></li>
+                        <li><a href="../doi-tac.html"><span>Đối tác</span></a></li>
+                        <li><a href="../tuyen-dung.html"><span>Tuyển dụng</span></a></li>
+                        <li><a href="../lien-he.html"><span>Liên hệ</span></a></li>
+                    </ul>
+                </div>
+                <div class="head-right">
+                    <div class="header1 nav_mobile">
+                        <a href="#menu1">Danh mục</a>
+                    </div>
+                    <nav id="menu1" class="menu1"></nav>
+                    <div class="hotline">hotline: 0979 701 723</div>
+                    <form action="http://sismasg.com/du-an" class="form-search">
+                        <input name="q" placeholder="Tìm kiếm..." />
+                        <button class="fa fa-search"></button>
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+    <div runnat="Window" class="Window" id="Window1_RD892" apply="yPhM+NHI1I4udJTQGLC2nzVVF5bz+MrHLnSU0Biwtp8dMfrYAWuORg==">
+		
+        <div class="wrapBreadcrumb">
+            <div class="page-width">
+                <ul class="breadcrumb">
+                    <li><a href="../index.html">
+                        Trang chủ</a></li>
+                    <li><span>/</span></li>
+                    <li><a href='../du-an.html'>
+                        Dự án</a></li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <div id="menuProject">
+            <a data="tongquan"><i class="fa fa-building-o"></i><span>Tổng quan</span></a>
+            <a data="vitri"><i class="fa fa-map-signs"></i><span>Vị trí</span></a>
+            <a data="matbang"><i class="fa fa-object-group"></i><span>Mặt bằng</span></a>
+            <a data="media"><i class="fa fa-image"></i><span>Hình ảnh</span></a>
+            
+            <a data="contact"><i class="fa fa-map"></i><span>Liên hệ</span></a>
+        </div>
+        <div runnat="Div" id="RD893_RD894" class="Div title-center">
+			CAO ỐC THƯƠNG MẠI DỊCH VỤ & CĂN HỘ LAKESIDE TOWER ( THÁP BÊN HỒ )
+		</div>
+        <div class="page-width">
+            <div class="list-item">
+
+                <div class="page-right">
+                    <div class="inner-item">
+                        <div id="wrapBanner">
+                            <div id="slider2_container" style="position: relative; width: 876px; height: 480px;">
+                                <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; overflow: hidden; width: 876px; height: 480px;">
+                                    <div class="rel ">                                            <a u="image">                                                <img src="../Content/Images/FileUpload/2018/7/pkv-du-an-ascent-lakeside-slide-20a040.jpg?w=876&amp;h=480&amp;mode=crop" /></a>                                        </div><div class="rel ">                                            <a u="image">                                                <img src="../Content/Images/FileUpload/2018/7/t4q-du-an-ascent-lakeside-slide-30-1a040.jpg?w=876&amp;h=480&amp;mode=crop" /></a>                                        </div>
+                                </div>
+                                <div u="navigator" class="jssorb01" style="position: absolute; bottom: 16px; right: 10px;">
+                                    <div u="prototype" style="position: absolute; width: 12px; height: 12px;">
+                                    </div>
+                                </div>
+                                <span u="arrowleft" class="jssora05l hide" style="width: 40px; height: 65px; top: 200px; left: 8px;"></span>
+                                <span u="arrowright" class="jssora05r hide" style="width: 40px; height: 65px; top: 200px; right: 8px"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-left">
+                    <div class="inner-item">
+                        <div id="tongquan">
+                            <div class="title-large">Tổng quan</div>
+                            <div runnat="Div" class="Div" id="RD898_RD899">
+			<p><span style="font-size:16px">Nhật Bản vốn nổi tiếng với phong c&aacute;ch tối giản, kh&ocirc;ng cầu kỳ, nhưng lại rất tinh tế, chuẩn mực.</span></p>
+
+<p><span style="font-size:16px">L&agrave; sản phẩm nằm trong d&ograve;ng Ascent của Tiến Ph&aacute;t, n&ecirc;n được chăm ch&uacute;t tỉ mẫn từng chi tiết, mang n&eacute;t đặc trưng ri&ecirc;ng, được phục vụ chu đ&aacute;o, chuy&ecirc;n nghiệp, kiến tạo cộng đồng văn m&igrave;nh, th&acirc;n thiện, mang n&eacute;t văn ho&aacute; ri&ecirc;ng biệt.&nbsp;</span></p>
+
+<p><span style="font-size:16px">Ascent Lakeside được thiết kế chủ đạo bởi c&acirc;y xanh, mộc v&agrave; nước kết hợp yếu tố hiện đại, sang trọng tạo n&ecirc;n một tổng thể to&agrave; nh&agrave; tr&aacute;ng lệ nhưng vẫn mang đậm phong c&aacute;ch Nhật Bản gần gũi, chan ho&agrave;.</span></p>
+
+<p><span style="font-size:16px">Kh&ocirc;ng qu&aacute; n&aacute;o nhiệt, ồn &agrave;o, Ascent Lakeside vẫn đ&aacute;p ứng đầy đủ mọi nhu cầu cần thiết của cư d&acirc;n một c&aacute;ch ho&agrave;n hảo, chất lượng nhất.</span></p>
+
+		</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div id="vitri">
+                <div runnat="TabBox" class="TabBox" id="RD900_RD901">
+			
+                    <div class="TabName">Thông tin dự án</div><div class="TabName">Vị trí dự án</div>
+                    <div class="TabContent"><h3><span style="font-size:16px"><u><strong>HƯỚNG NH&Igrave;N TUYỆT MỸ</strong></u></span></h3>
+
+<p><span style="font-size:16px">Tọa lạc ngay mặt tiền đại lộ Nguyễn Văn Linh, gi&aacute;p Ph&uacute; Mỹ Hưng Quận 7,&nbsp; Ascent Lakeside sở hữu view 360 độ to&agrave;n cảnh về trung t&acirc;m Quận 7, Quận 1 v&agrave; Quận 2. Đặc biệt, dự &aacute;n nằm cạnh hồ nước nh&acirc;n tạo T&acirc;n Mỹ trong xanh mang đến cảnh y&ecirc;n b&igrave;nh, tĩnh lặng.</span></p>
+
+<p style="text-align:center"><img alt="Du an Ascent Lakeside tam nhin" src="../Content/Images/FileUpload/userfiles/images/du-an-Ascent-Lakeside-tam-nhin.jpg" /></p>
+
+<h3><span style="font-size:16px"><u><strong>LI&Ecirc;N KẾT V&Ugrave;NG</strong></u></span></h3>
+
+<h3><span style="font-size:16px"><u><strong>CHẤT LƯỢNG H&Agrave;NG ĐẦU</strong></u></span></h3>
+
+<p><span style="font-size:16px">Với hơn 30 năm kinh nghiệm, C&ocirc;ng ty Cổ phần X&acirc;y dựng v&agrave; Kinh doanh địa ốc H&ograve;a B&igrave;nh (H&ograve;a B&igrave;nh Corporation)&nbsp;đ&atilde; trở th&agrave;nh nh&agrave; thầu x&acirc;y dựng uy t&iacute;n bậc nhất qua nhiều c&ocirc;ng tr&igrave;nh trong nước v&agrave; quốc tế như: Sunrise City, Keangnam, Viettin Bank, Desa Green, Sripetaling (Malaysia)... C&aacute;c c&ocirc;ng tr&igrave;nh do H&ograve;a B&igrave;nh thực hiện lu&ocirc;n nhận được sự tin tưởng v&agrave; h&agrave;i l&ograve;ng tuyệt đối của kh&aacute;ch h&agrave;ng v&agrave; cư d&acirc;n.</span></p>
+
+<h3><span style="font-size:16px"><u><strong>QUY M&Ocirc; DỰ &Aacute;N</strong></u></span></h3>
+
+<p><span style="font-size:16px">Quy m&ocirc; dự &aacute;n:&nbsp;<strong>1 block căn hộ cao 23 tầng</strong></span></p>
+
+<p><span style="font-size:16px">Mật độ x&acirc;y dựng:&nbsp;<strong>40 %</strong></span></p>
+
+<p><span style="font-size:16px">Số căn hộ:&nbsp;<strong>136&nbsp;căn</strong></span></p>
+
+<p><span style="font-size:16px">Diện t&iacute;ch:&nbsp;<strong>64m2 &ndash; 137m2</strong></span></p>
+
+<p><span style="font-size:16px">Dự kiến b&agrave;n giao:&nbsp;<strong>Năm&nbsp;2019</strong></span></p>
+
+<h3><span style="font-size:16px"><u><strong>ĐỐI T&Aacute;C</strong></u></span></h3>
+
+<p><span style="font-size:16px">Hợp t&aacute;c ph&aacute;t triển dự &aacute;n:&nbsp;<strong>Tiến Ph&aacute;t Corp - Tập đo&agrave;n Sanyo Homes (Nhật Bản)</strong></span></p>
+
+<p><span style="font-size:16px">Tổng thầu thiết kế v&agrave; thi c&ocirc;ng:&nbsp;<strong>C&ocirc;ng ty Cổ phần X&acirc;y dựng v&agrave; Kinh doanh địa ốc H&ograve;a B&igrave;nh (H&ograve;a B&igrave;nh Corporation)</strong></span></p>
+
+<p><span style="font-size:16px">Quản l&yacute; vận h&agrave;nh<strong>: Okamura Sanyo Property</strong></span></p>
+
+<p><span style="font-size:16px">Ph&acirc;n phối ch&iacute;nh thức:&nbsp;<strong>C&ocirc;ng ty Cổ phần Nh&agrave; H&ograve;a B&igrave;nh (HoaBinh House) &amp; S&agrave;n Asia Land</strong></span></p>
+</div><div class="TabContent"><p style="text-align:center"><img alt="" src="../Content/Images/FileUpload/userfiles/images/ypm-du-an-Ascent-Lakeside-vi-tri.png" style="height:600px; width:800px" /></p>
+
+<p>&nbsp;</p>
+
+<p><strong><span style="font-size:16px">Địa điểm: 70 Nguyễn Văn Linh, P.T&acirc;n Thuận T&acirc;y, Quận 7, Tp.HCM</span></strong></p>
+
+<p><strong><span style="font-size:16px">Chủ đầu tư: C&ocirc;ng Ty Cổ Phần X&acirc;y Dựng V&agrave; Thương Mại Đất Phương Nam</span></strong></p>
+
+<p><strong><span style="font-size:16px">Chức năng c&ocirc;ng tr&igrave;nh: Cao ốc văn ph&ograve;ng v&agrave; căn hộ cao cấp</span></strong></p>
+
+<p><strong><span style="font-size:16px">Quy m&ocirc; c&ocirc;ng tr&igrave;nh: Gồm c&oacute; 1 khối nh&agrave; v&agrave; 2 tầng hầm</span></strong></p>
+
+<p><span style="font-size:16px">Diện t&iacute;ch đất sử dụng: 3.554 m2</span></p>
+
+<p><span style="font-size:16px">Tầng cao x&acirc;y dựng: 23 tầng</span></p>
+
+<p><span style="font-size:16px">Mật độ x&acirc;y dựng: 39%</span></p>
+
+<p><span style="font-size:16px">Chiều cao c&ocirc;ng tr&igrave;nh: 75 m</span></p>
+</div>
+                
+		</div>
+            </div>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div id="matbang">
+                <ul runnat="Tree" id="cboMatBang1_RD908" class="Tree style-tree1">
+			
+		</ul>
+                <div class="sep20"></div>
+                <ul runnat="Tree" id="cboMatBang2_RD911" class="Tree style-tree2">
+			
+		</ul>
+                <div class="sep20"></div>
+                <div runnat="Div" class="Div" id="txtContentMatBang_RD914">
+			
+		</div>
+            </div>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div id="media">
+                <div runnat="TabBox" class="TabBox" id="RD915_RD916">
+			
+                    <div class="TabName">Tiện ích</div><div class="TabName">Nội thất</div>
+                    <div class="TabContent">                            <p><span style="font-size:16px">Tại Ascent Lakeside, chỉ v&agrave;i bước ch&acirc;n l&agrave; bạn c&ugrave;ng gia đ&igrave;nh sẽ tận hưởng những tiện &iacute;ch mang phong c&aacute;ch Nhật Bản hiện đại từ học tập, vui chơi, giải tr&iacute; đến chăm s&oacute;c sắc đẹp, r&egrave;n luyện sức khỏe,&hellip; Đặc biệt, hệ thống lọc nước sạch tại nguồn theo c&ocirc;ng nghệ Nhật Bản v&agrave; sơn ngoại thất phải chống b&aacute;m bụi, nứt nẻ v&agrave; giữ được độ bền đẹp l&acirc;u d&agrave;i 5 &ndash; 10 năm.</span></p>
+                                <div class="sep20"></div>                            <div class="gallery">                                <a href="../Content/Images/FileUpload/2018/7/3v0-du-an-ascent-lakeside-tien-ich-ho-boi-tran-20.png"><img src="../Content/Images/FileUpload/2018/7/3v0-du-an-ascent-lakeside-tien-ich-ho-boi-tran-20cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/ch5-du-an-ascent-lakeside-tien-ich-vuon-nhat-ban1.png"><img src="../Content/Images/FileUpload/2018/7/ch5-du-an-ascent-lakeside-tien-ich-vuon-nhat-ban1cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/czo-du-an-ascent-lakeside-tien-ich-khu-tra-dao2.png"><img src="../Content/Images/FileUpload/2018/7/czo-du-an-ascent-lakeside-tien-ich-khu-tra-dao2cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/ji0-du-an-ascent-lakeside-ho-canh-quan3.png"><img src="../Content/Images/FileUpload/2018/7/ji0-du-an-ascent-lakeside-ho-canh-quan3cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/kuv-du-an-ascent-lakeside-tien-ich-sky-garden4.png"><img src="../Content/Images/FileUpload/2018/7/kuv-du-an-ascent-lakeside-tien-ich-sky-garden4cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/u0b-du-an-ascent-lakeside-tien-ich-sanh-don5.png"><img src="../Content/Images/FileUpload/2018/7/u0b-du-an-ascent-lakeside-tien-ich-sanh-don5cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/v23-du-an-ascent-lakeside-cabana-ket-hop-cong-vien-ven-song6.png"><img src="../Content/Images/FileUpload/2018/7/v23-du-an-ascent-lakeside-cabana-ket-hop-cong-vien-ven-song6cf15.png?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/xi0-du-an-ascent-lakeside-tien-ich-khu-vui-choi-tre-em7.png"><img src="../Content/Images/FileUpload/2018/7/xi0-du-an-ascent-lakeside-tien-ich-khu-vui-choi-tre-em7cf15.png?w=300&amp;h=200&amp;mode=crop"/></a>                            </div>                        </div><div class="TabContent">                                                            <div class="sep20"></div>                            <div class="gallery">                                <a href="../Content/Images/FileUpload/2018/7/1x3-ascent-lakeside-phong-tam-10.jpg"><img src="../Content/Images/FileUpload/2018/7/1x3-ascent-lakeside-phong-tam-10cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/bja-ascent-lakeside-phong-khach-21.jpg"><img src="../Content/Images/FileUpload/2018/7/bja-ascent-lakeside-phong-khach-21cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/f5v-ascent-lakeside-phong-khach-12.jpg"><img src="../Content/Images/FileUpload/2018/7/f5v-ascent-lakeside-phong-khach-12cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/hio-ascent-lakeside-phong-ngu1-23.jpg"><img src="../Content/Images/FileUpload/2018/7/hio-ascent-lakeside-phong-ngu1-23cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/oez-ascent-lakeside-phong-khach-14.jpg"><img src="../Content/Images/FileUpload/2018/7/oez-ascent-lakeside-phong-khach-14cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/pve-ascent-lakeside-phong-khach-35.jpg"><img src="../Content/Images/FileUpload/2018/7/pve-ascent-lakeside-phong-khach-35cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/wf3-ascent-lakeside-phong-khach-26.jpg"><img src="../Content/Images/FileUpload/2018/7/wf3-ascent-lakeside-phong-khach-26cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a><a href="../Content/Images/FileUpload/2018/7/wzi-ascent-lakeside-bep7.jpg"><img src="../Content/Images/FileUpload/2018/7/wzi-ascent-lakeside-bep7cf15.jpg?w=300&amp;h=200&amp;mode=crop"/></a>                            </div>                        </div>
+                
+		</div>
+            </div>
+            <div class="sep20 clear"></div>
+
+        </div>
+
+        <div id="thuvien">
+            <div class="sep20"></div>
+            <div class="sep20"></div>
+            <div class="page-width">
+                <div class="list-item">
+                    <div class="item-2">                            <div class="inner-item">                                <div class="thuvien-item">                                    <a href="https://www.youtube.com/watch?v=XgHdPrTI19g" class="img" target="_blank">                                        <img src="../Content/Images/FileUpload/2018/7/download0388a.png?w=100&amp;h=100&amp;mode=pad" /></a>                                    <a href="https://www.youtube.com/watch?v=XgHdPrTI19g" class="name" target="_blank">Video</a>                                    <div class="desc">Video giới thiệu về dự án Ascent Lakeside</div>                                    <div class="clear"></div>                                </div>                            </div>                        </div><div class="item-2">                            <div class="inner-item">                                <div class="thuvien-item">                                    <a href="#" class="img" target="_blank">                                        <img src="../Content/Images/FileUpload/2018/7/pdf-icon0388a.png?w=100&amp;h=100&amp;mode=pad" /></a>                                    <a href="#" class="name" target="_blank">Brochure</a>                                    <div class="desc">Ấn bản giới thiệu thông tin về dự án Ascent Lakeside</div>                                    <div class="clear"></div>                                </div>                            </div>                        </div>
+                </div>
+            </div>
+            <div class="sep20 clear"></div>
+            <div class="sep20"></div>
+        </div>
+
+        <div class="sep20"></div>
+        <div class="page-width">
+            <div id="contact">
+                <div class="title-page">Liên hệ</div>
+                <div runnat="Validate" class="Validate" id="vValid_RD925">
+			
+                    <table class="form" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td>
+                                <div>Họ và tên</div>
+                                <input runnat="TextBox" class="TextBox" id="txtFullName_RD928" />
+                                
+                            </td>
+                            <td>
+                                <div>Số điện thoại</div>
+                                <input runnat="TextBox" class="TextBox" id="txtTel_RD931" />
+                                
+                            </td>
+                            <td>
+                                <div>Email</div>
+                                <input runnat="TextBox" class="TextBox" id="txtEmail_RD934" />
+                                
+                            </td>
+                        </tr>
+                        <tr class="hide">
+                            <td colspan="3">
+                                <div>Chủ đề</div>
+                                <input runnat="TextBox" class="TextBox" id="txtSubject_RD937" />
+                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div>Nội dung</div>
+                                <textarea runnat="TextArea" class="TextArea" id="txtContent_RD940"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button runnat="Button" id="btnSend_RD943" class="Button Button4">
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                
+		</div>
+            </div>
+        </div>
+        
+	</div><script id="script-server">$("#RD900_RD901").tabbox();$("#cboMatBang1_RD908").data("HasDefault",false);$("#cboMatBang1_RD908").data("OnSelect","ChangeMatBang1");$("#cboMatBang1_RD908").data("Template","");$("#cboMatBang1_RD908").tree();$("#cboMatBang2_RD911").data("HasDefault",false);$("#cboMatBang2_RD911").data("OnSelect","ChangeMatBang2");$("#cboMatBang2_RD911").data("Template","");$("#cboMatBang2_RD911").tree();$("#RD915_RD916").tabbox();$("#txtFullName_RD928").data("RequiredMsg","x");$("#txtFullName_RD928").textbox();$("#txtFullName_RD928").addClass("Valid");$("#txtTel_RD931").data("RequiredMsg","x");$("#txtTel_RD931").textbox();$("#txtTel_RD931").addClass("Valid");$("#txtEmail_RD934").data("RequiredMsg","x");$("#txtEmail_RD934").textbox();$("#txtEmail_RD934").addClass("Valid");$("#txtSubject_RD937").data("RequiredMsg","x");$("#txtSubject_RD937").textbox();$("#txtSubject_RD937").addClass("Valid");$("#btnSend_RD943").unbind("click");$("#btnSend_RD943").click(function(){$("#btnSend_RD943").actionComponent("SendEmailContact")});$("#btnSend_RD943").html("<span>Gửi</span>");$("#Window1_RD892").data("paramPage","metaid=16&lang=vi&sub1=ascent-lakeside");$("#cboMatBang1_RD908").html("<li data=\\"1\\"><a class='tree-icon'></a><label for=\\"cboMatBang1_RD908-1\\" class='tree-item'>Mặt bằng các tầng</label><div class=\\"clear\\"></div><ul></ul></li><li data=\\"2\\"><a class='tree-icon'></a><label for=\\"cboMatBang1_RD908-2\\" class='tree-item'>Mặt bằng căn hộ</label><div class=\\"clear\\"></div><ul></ul></li>");$("#cboMatBang1_RD908").tree().reload();$("#cboMatBang1_RD908").tree().select("");$("#cboMatBang1_RD908").tree().select("1");$("#cboMatBang2_RD911").html("<li data=\\"3\\"><a class='tree-icon'></a><label for=\\"cboMatBang2_RD911-1\\" class='tree-item'>Mặt bằng tầng 6-13</label><div class=\\"clear\\"></div><ul></ul></li><li data=\\"4\\"><a class='tree-icon'></a><label for=\\"cboMatBang2_RD911-2\\" class='tree-item'>Mặt bằng tầng 14-18</label><div class=\\"clear\\"></div><ul></ul></li>");$("#cboMatBang2_RD911").tree().reload();$("#cboMatBang2_RD911").tree().select("");$("#cboMatBang2_RD911").tree().select("3");$("#txtContentMatBang_RD914").html("<p style=\\"text-align:center\\"><img alt=\\"\\" src=\\"/Content/Images/FileUpload/userfiles/images/czg-MB_tang_613_fix.png\\" style=\\"height:606px; width:800px\\" /></p>\\n");</script>
+
+        <div class="sep20 clear"></div>
+        <div class="page-width2">
+            <div id="slideLogo">
+                <a class="item" href="http://www.vietcombank.com.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2023/6/thong-tin-ve-ngan-hang-vietcombank0b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="https://www.anphong.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2023/6/apc-anphong-web-10b2f4.png?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="https://hoangnamgroup.bravesites.com/" target="_blank">                        <img src="../Content/Images/FileUpload/2023/6/0466a1f9c9b7a229a09dce447ea550f80-2b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://www.hoabinhcorporation.com.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2018/8/untitled-10-1b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://www.mik.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2018/7/mik0b2f4.png?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://www.vnuhcm.edu.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2018/7/bqlda---dh-qg-hcm0b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://www.hoabinhcorporation.com.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2020/10/c25111d9f1e20fbc56f30b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://www.bidv.com.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2018/8/bidv0b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://www.acb.com.vn/" target="_blank">                        <img src="../Content/Images/FileUpload/2018/8/acb0b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a><a class="item" href="http://tienphatcorp.com/" target="_blank">                        <img src="../Content/Images/FileUpload/2018/7/tien-phat0b2f4.jpg?w=200&amp;h=80&amp;mode=pad" class="img" />                    </a>
+            </div>
+            <a class="prev_slideLogo hide"></a><a class="next_slideLogo hide"></a>
+            <script>
+                $(function () {
+                    $("#slideLogo").slidemaster({ min: 200, minSize: 2 });
+                    setInterval(function () {
+                        $(".next_slideLogo").click();
+                    }, 5000);
+                })
+            </script>
+        </div>
+        <div class="sep20 clear"></div>
+        <div id="footPage2" class="hide">
+            <div class="list-item">
+                <div class="item-4">                        <div class="inner-item"><a href="../chinh-sach-dieu-khoan.html">Chính sách & điều khoản</a></div>                    </div><div class="item-4">                        <div class="inner-item"><a href="../thoa-thuan-su-dung.html">Thỏa thuận sử dụng</a></div>                    </div><div class="item-4">                        <div class="inner-item"><a href="../hinh-thuc-thanh-toan.html">Hình thức thanh toán</a></div>                    </div><div class="item-4">                        <div class="inner-item"><a href="../bao-mat-thong-tin-khach-hang.html">Bảo mật thông tin</a></div>                    </div>
+            </div>
+        </div>
+        <div id="footPage">
+            <div class="page-width">
+                <div runnat="Div" class="Div" id="RD955_RD956">
+		<h1 style="text-align:center">C&Ocirc;NG TY CỔ PHẦN TƯ VẤN SISMA</h1>
+
+<p style="text-align:center"><span style="font-size:14px">Địa chỉ: 7/6 đường 25, Khu phố Long H&ograve;a, Phường Long Thạnh Mỹ, Th&agrave;nh phố Thủ Đức, TP HCM</span></p>
+
+<p style="text-align:center"><span style="font-size:14px">VP Giao dịch:&nbsp;Số 108 Đường Cao Lỗ, Phường 4, Quận 8, TP HCM</span></p>
+
+<p style="text-align:center"><span style="font-size:14px">Điện Thoại: 0979.701.723&nbsp;</span></p>
+
+<p style="text-align:center"><span style="font-size:14px">Email: info@sismasg.com - tuantvgs@gmail.com</span></p>
+
+<p style="text-align:center"><span style="font-size:14px">GPKD số 0303725608 do Sở Kế Hoạch V&agrave;&nbsp;Đầu Tư TPHCM cấp ng&agrave;y 29/03/2005</span></p>
+
+	</div>
+            </div>
+            <div style="font-family: Arial; position: absolute; right: 10px; bottom: 0px; color: white; font-size: 11px"><a target="_blank" style="color: white" href="http://saigonwebsite.vn/thiet-ke-web">Thiết kế Website</a> Trí Phạm</div>
+        </div>
+    
+</div><script id="script-server">$("#pageMain_RD883").data("paramPage","metaid=16&lang=vi&sub1=ascent-lakeside");</script>
+</body>
+
+
+</html>
+
+`;
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(embeddedHTML, 'text/html');
+  const targetId = 'Window1_RD892';
+  const target = doc.getElementById(targetId);
+  const sidebar = document.getElementById('controlsList');
+  const iframe = document.getElementById('iframePreview');
+
+  if (!target){
+    sidebar.innerHTML = "Không tìm thấy vùng nội dung.";
+    iframe.srcdoc = embeddedHTML;
+    return;
+  }
+
+  let workingDoc = doc;
+  let idCounter = 1;
+  function tag(el){
+    if (!el.dataset.editId) el.dataset.editId = 'E'+(idCounter++);
+    return el.dataset.editId;
+  }
+
+  const texts = [];
+  const imgs = [];
+
+  const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+  let n;
+  while(n = walker.nextNode()){
+    if(n.nodeType===3){
+      let t = n.textContent.trim();
+      if(t.length>1){
+        const p = n.parentElement;
+        if(p && !['script','style','button','input','textarea','label'].includes(p.tagName.toLowerCase())){
+          if(!texts.some(x=>x.el===p)){
+            texts.push({el:p, initial:p.innerHTML});
+            tag(p);
+          }
+        }
+      }
+    }
+  }
+
+  target.querySelectorAll('img').forEach(im=>{
+    tag(im);
+    imgs.push({el:im, src:im.getAttribute('src')});
+  });
+
+  sidebar.innerHTML = "";
+
+  function render(){
+    iframe.srcdoc = "<!DOCTYPE html>"+workingDoc.documentElement.outerHTML;
+  }
+
+  texts.forEach((it,i)=>{
+    const id = it.el.dataset.editId;
+    const box = document.createElement('div');
+    box.className="item";
+    box.innerHTML = \`
+      <div class="label">#\${i+1} — \${it.el.tagName}</div>
+      <textarea data-id="\${id}" rows="3">\${it.el.innerHTML.trim()}</textarea>
+    \`;
+    box.querySelector('textarea').addEventListener('input', e=>{
+      const v = e.target.value;
+      const el = workingDoc.querySelector('[data-edit-id="'+id+'"]');
+      if(el){el.innerHTML = v; render();}
+    });
+    sidebar.appendChild(box);
+  });
+
+  if(imgs.length){
+    const h = document.createElement('div');
+    h.className="muted small";
+    h.style.margin="8px 0";
+    h.textContent="Hình ảnh:";
+    sidebar.appendChild(h);
+  }
+
+  imgs.forEach((it,i)=>{
+    const id = it.el.dataset.editId;
+    const box = document.createElement('div');
+    box.className="item";
+    box.innerHTML = \`
+      <div class="label">Ảnh #\${i+1}</div>
+      <div class="img-row">
+        <img class="img-thumb" src="\${it.src}">
+        <input type="file" data-id="\${id}" accept="image/*">
+      </div>
+    \`;
+    const thumb = box.querySelector('.img-thumb');
+    box.querySelector('input[type=file]').addEventListener('change', e=>{
+      const f = e.target.files[0];
+      if(!f) return;
+      const r = new FileReader();
+      r.onload = ev=>{
+        const el = workingDoc.querySelector('[data-edit-id="'+id+'"]');
+        if(el){el.src = ev.target.result;}
+        thumb.src = ev.target.result;
+        render();
+      };
+      r.readAsDataURL(f);
+    });
+    sidebar.appendChild(box);
+  });
+
+  document.getElementById('btnDownload').onclick = ()=>{
+    const html = "<!DOCTYPE html>"+workingDoc.documentElement.outerHTML;
+    const blob = new Blob([html], {type:"text/html"});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = "edited.html";
+    a.click();
+  };
+
+  render();
+})();
+</script>
+
+</body>
+</html>
