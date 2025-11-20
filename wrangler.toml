@@ -1,7 +1,4 @@
 name = "late-dust-d735"
-compatibility_date = "2024-11-20"
+compatibility_date = "2025-11-20"
 
-preview_urls = false
-
-[site]
-bucket = "./public"
+assets = { directory = "./public" }
