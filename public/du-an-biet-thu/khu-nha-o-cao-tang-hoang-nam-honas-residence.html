@@ -538,6 +538,113 @@ Chủ đầu tư:</strong> C&ocirc;ng ty TNHH Dịch vụ Bất động sản v&
         </div>
     
 </div><script id="script-server">$("#pageMain_RD725").data("paramPage","metaid=17&lang=vi&sub1=khu-nha-o-cao-tang-hoang-nam-honas-residence");</script>
+<!-- --- START: Fix Mặt bằng (paste trước </body>) --- -->
+<script>
+(function(){
+  // mapping nhãn --> ảnh (chỉnh nếu cần)
+  const floorImageMapLabel = {
+    "MẶT BẰNG CĂN HỘ TẦNG 1-2": "/Content/Images/FileUpload/userfiles/images/1-2.jpg",
+    "MẶT BẰNG CĂN HỘ TẦNG 3":   "/Content/Images/FileUpload/userfiles/images/3.jpg",
+    "MẶT BẰNG CĂN HỘ TẦNG 4":   "/Content/Images/FileUpload/userfiles/images/4.jpg",
+    "MẶT BẰNG CĂN HỘ TẦNG 5-29":"/Content/Images/FileUpload/userfiles/images/5.jpg",
+    // nếu bạn muốn khi click vào "Mặt bằng các tầng" / "Mặt bằng căn hộ" hiển thị mặc định:
+    "MẶT BẰNG CÁC TẦNG": "/Content/Images/FileUpload/userfiles/images/1-2.jpg",
+    "MẶT BẰNG CĂN HỘ": "/Content/Images/FileUpload/userfiles/images/1-2.jpg"
+  };
+
+  // mapping theo data id (nếu muốn dùng)
+  const mapDataId = {
+    "68": "/Content/Images/FileUpload/userfiles/images/1-2.jpg",
+    "69": "/Content/Images/FileUpload/userfiles/images/3.jpg",
+    "70": "/Content/Images/FileUpload/userfiles/images/4.jpg",
+    "71": "/Content/Images/FileUpload/userfiles/images/5.jpg",
+    "67": "/Content/Images/FileUpload/userfiles/images/1-2.jpg",
+    "72": "/Content/Images/FileUpload/userfiles/images/1-2.jpg"
+  };
+
+  function normText(t){
+    return (t||"").trim().replace(/\s+/g," ").toUpperCase();
+  }
+
+  function setHtmlContent(html){
+    const container = document.querySelector("#txtContentMatBang_RD756");
+    if(container) container.innerHTML = html;
+  }
+
+  // kiểm tra tồn tại file ảnh bằng fetch HEAD (cùng origin)
+  async function existsImage(url){
+    try{
+      const res = await fetch(url, { method: 'HEAD' });
+      return res.ok;
+    }catch(e){
+      return false;
+    }
+  }
+
+  async function showImageWithCheck(url){
+    if(!url) {
+      setHtmlContent('<p>Không có đường dẫn ảnh. Vui lòng kiểm tra cấu hình.</p>');
+      return;
+    }
+    const ok = await existsImage(url);
+    if(!ok){
+      setHtmlContent('<p>Ảnh không tìm thấy: <br><code>'+url+'</code><br>Vui lòng kiểm tra tên file (đặc biệt chữ hoa/thường) và vị trí thư mục.</p>');
+      return;
+    }
+    const html = '<p style="text-align:center"><img alt="Mặt bằng" src="'+url+'" style="max-width:100%;height:auto;display:inline-block"></p>';
+    setHtmlContent(html);
+  }
+
+  // bind events cho labels trong tree (2 cây)
+  function bindTree(){
+    const selectors = ["#cboMatBang1_RD750 .tree-item", "#cboMatBang2_RD753 .tree-item"];
+    selectors.forEach(sel=>{
+      document.querySelectorAll(sel).forEach(label=>{
+        if(label.dataset._bound) return;
+        label.style.cursor = "pointer";
+        label.addEventListener("click", async function(e){
+          e.preventDefault(); e.stopPropagation();
+          const txt = normText(label.textContent || label.innerText);
+          let url = floorImageMapLabel[txt] || null;
+          if(!url){
+            const li = label.closest("li[data]");
+            if(li){
+              const did = li.getAttribute("data");
+              url = mapDataId[did] || null;
+            }
+          }
+          await showImageWithCheck(url);
+          // highlight chọn
+          document.querySelectorAll(sel).forEach(s=> s.classList.remove("selected-tree-item"));
+          label.classList.add("selected-tree-item");
+        });
+        label.dataset._bound = "1";
+      });
+    });
+  }
+
+  // style cho item đã chọn
+  (function addStyle(){
+    const css = ".selected-tree-item{ background:#f0f8ff; border-radius:4px; padding:2px 6px; } #txtContentMatBang_RD756 img{ box-shadow:0 6px 18px rgba(0,0,0,0.12); }";
+    const s = document.createElement("style"); s.appendChild(document.createTextNode(css)); document.head.appendChild(s);
+  })();
+
+  document.addEventListener("DOMContentLoaded", function(){
+    bindTree();
+    // tree có thể được tạo động sau khi DOMContentLoaded → thử bind lại sau
+    setTimeout(bindTree, 200);
+    setTimeout(bindTree, 800);
+    // nếu vùng rỗng, show mặc định 1-2
+    const cont = document.querySelector("#txtContentMatBang_RD756");
+    if(cont && cont.innerHTML.trim()===""){
+      showImageWithCheck("/Content/Images/FileUpload/userfiles/images/1-2.jpg");
+    }
+  });
+
+})(); 
+</script>
+<!-- --- END: Fix Mặt bằng --- -->
+
 </body>
 
 
