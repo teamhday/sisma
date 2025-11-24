@@ -645,6 +645,140 @@ Chủ đầu tư:</strong> C&ocirc;ng ty TNHH Dịch vụ Bất động sản v&
 </script>
 <!-- --- END: Fix Mặt bằng --- -->
 
+<!-- BẮT ĐẦU: Script highlight cho cây Mặt bằng (dán trước </body>) -->
+<style>
+  /* style highlight cho nhãn cấp 1 (tab nhóm) */
+  #cboMatBang1_RD750 .tree-item.tree-active {
+    background: #e8f4ff;
+    color: #0b64a0;
+    border-radius: 4px;
+    padding: 3px 6px;
+  }
+  /* style giữ nguyên cho item con đã chọn */
+  .selected-tree-item {
+    background: #f0f8ff;
+    border-radius: 4px;
+    padding: 2px 6px;
+  }
+</style>
+
+<script>
+(function(){
+  // --- Cấu hình mapping dataId con -> dataId cha (chỉnh nếu khác)
+  // Dựa trên script-server trong source gốc:
+  // cboMatBang1_RD750 có li data="67" (Mặt bằng các tầng) và data="72" (Mặt bằng căn hộ)
+  // cboMatBang2_RD753 có li data="68","69","70","71" tương ứng các tầng
+  const parentMap = {
+    // childDataId: parentDataId
+    "68": "72", // MẶT BẰNG CĂN HỘ TẦNG 1-2 -> parent Mặt bằng căn hộ
+    "69": "72", // tầng 3 -> parent Mặt bằng căn hộ
+    "70": "72", // tầng 4 -> parent Mặt bằng căn hộ
+    "71": "72", // tầng 5-29 -> parent Mặt bằng căn hộ
+    // nếu có item con khác map thêm ở đây
+    // và nếu label cấp 1 (67) có con riêng, map child->67 nếu cần
+  };
+
+  // Helper: remove class tree-active trên tất cả nhãn cấp 1
+  function clearParentActive(){
+    document.querySelectorAll("#cboMatBang1_RD750 .tree-item").forEach(el=>{
+      el.classList.remove("tree-active");
+    });
+  }
+
+  // set active cho parent theo data id chuỗi (vd "72")
+  function setParentActiveByData(parentDataId){
+    if(!parentDataId) return;
+    const parentLi = document.querySelector('#cboMatBang1_RD750 li[data="'+parentDataId+'"]');
+    if(parentLi){
+      const lab = parentLi.querySelector(".tree-item");
+      if(lab){
+        clearParentActive();
+        lab.classList.add("tree-active");
+      }
+    }
+  }
+
+  // Nếu click trực tiếp vào 1 nhãn cấp 1 -> active chính nó
+  function bindParentLabels(){
+    document.querySelectorAll("#cboMatBang1_RD750 .tree-item").forEach(label=>{
+      if(label.dataset._parentBound) return;
+      label.addEventListener("click", function(e){
+        e.preventDefault(); e.stopPropagation();
+        clearParentActive();
+        label.classList.add("tree-active");
+        // Khi click vào parent, có thể muốn load ảnh mặc định của nhóm đó:
+        // Nếu parent li có data attr, check mapDataId nếu bạn muốn
+        label.dataset._parentBound = "1";
+      });
+    });
+  }
+
+  // Khi click 1 item con (cboMatBang2), set parent tương ứng
+  function bindChildLabels(){
+    document.querySelectorAll("#cboMatBang2_RD753 .tree-item").forEach(label=>{
+      if(label.dataset._childBound) return;
+      label.addEventListener("click", function(e){
+        e.preventDefault(); e.stopPropagation();
+        // mark selected for child (existing behavior)
+        document.querySelectorAll("#cboMatBang2_RD753 .tree-item").forEach(l=> l.classList.remove("selected-tree-item"));
+        label.classList.add("selected-tree-item");
+
+        // xác định data id của li chứa label này
+        const li = label.closest("li[data]");
+        if(li){
+          const childData = li.getAttribute("data");
+          const parentData = parentMap[childData];
+          if(parentData){
+            setParentActiveByData(parentData);
+          } else {
+            // fallback: set parent to 'Mặt bằng căn hộ' (data=72) nếu không có map
+            setParentActiveByData("72");
+          }
+        } else {
+          // fallback: highlight first parent
+          setParentActiveByData("72");
+        }
+      });
+      label.dataset._childBound = "1";
+    });
+  }
+
+  // khi DOM ready, bind cả parent và child
+  function init(){
+    bindParentLabels();
+    bindChildLabels();
+
+    // nếu có state hiện tại (ví dụ đã có selected-tree-item) thì phản ánh lên parent
+    const cur = document.querySelector("#cboMatBang2_RD753 .selected-tree-item");
+    if(cur){
+      const li = cur.closest("li[data]");
+      if(li){
+        const cd = li.getAttribute("data");
+        const pd = parentMap[cd] || "72";
+        setParentActiveByData(pd);
+      }
+    } else {
+      // nếu không có chọn item con, lấy xem parent mặc định: script-server có chọn "67" ban đầu
+      const defaultParent = document.querySelector('#cboMatBang1_RD750 li[data="67"] .tree-item') || document.querySelector('#cboMatBang1_RD750 .tree-item');
+      if(defaultParent) {
+        clearParentActive();
+        defaultParent.classList.add("tree-active");
+      }
+    }
+  }
+
+  // retry binding vì tree có thể được sinh động sau DOMContentLoaded
+  document.addEventListener("DOMContentLoaded", function(){
+    init();
+    setTimeout(init, 200);
+    setTimeout(init, 800);
+  });
+
+})();
+</script>
+<!-- KẾT THÚC script highlight -->
+
+
 </body>
 
 
